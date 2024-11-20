@@ -1,0 +1,84 @@
+:root {
+    --primary-color: #007bff;
+    --secondary-color: #f0f0f0;
+    --text-color: #333;
+    --white: #fff;
+    --border-radius: 10px;
+    --transition-speed: 0.3s;
+    --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.2);
+    --section-spacing: 80px;
+    --button-padding: 12px 20px;
+    --button-font-size: 16px;
+  }
+  
+
+  form {
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 25px 30px;
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-light);
+    transition: transform var(--transition-speed);
+    overflow: hidden; /* Asegura que nada se salga del borde */
+  }
+  
+  form:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 123, 255, 0.15);
+  }
+  
+  form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text-color);
+    font-size: 1rem;
+  }
+  
+  form input[type="text"],
+  form input[type="password"] {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border: 1px solid var(--secondary-color);
+    border-radius: var(--border-radius);
+    background-color: #fafafa;
+    color: var(--text-color);
+    font-size: 1rem;
+    transition: box-shadow var(--transition-speed), border-color var(--transition-speed);
+  }
+  
+  form input[type="text"]:focus,
+  form input[type="password"]:focus {
+    background-color: var(--white);
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.15);
+    outline: none;
+  }
+  
+  form button[type="submit"] {
+    width: 100%;
+    padding: 12px 20px;
+    margin-top: 10px; /* Espacio entre el campo y el botón */
+    background: linear-gradient(135deg, var(--primary-color), #0056b3);
+    color: var(--white);
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: var(--button-font-size);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background var(--transition-speed), box-shadow var(--transition-speed);
+  }
+  
+  form button[type="submit"]:hover {
+    background: linear-gradient(135deg, #0056b3, var(--primary-color));
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.25);
+  }
+  
+  form button[type="submit"]:active {
+    transform: scale(0.98);
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.2);
+  }
+  

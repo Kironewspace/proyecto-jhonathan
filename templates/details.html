@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalles del Producto</title>
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #f0f0f0;
+            --text-color: #333;
+            --white: #fff;
+            --border-radius: 10px;
+            --transition-speed: 0.3s;
+            --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Montserrat", sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .detalle-producto {
+            display: inline-block;
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .producto-info {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .producto-info img {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--border-radius);
+            object-fit: cover;
+            box-shadow: var(--shadow-light);
+        }
+
+        .descripcion {
+            flex-grow: 1;
+        }
+
+        .descripcion h2 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin: 0 0 10px;
+        }
+
+        .descripcion p {
+            margin: 10px 0;
+        }
+
+        label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        #cantidad {
+            width: 60px;
+            padding: 5px;
+            font-size: 1rem;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--secondary-color);
+            margin: 10px 0;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 10px 15px;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color var(--transition-speed);
+        }
+
+        button:hover {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="detalle-producto">
+        <h1>{{ producto.nombre }}</h1>
+        <div class="producto-info">
+            <img src="data:image/jpeg;base64,{{ producto.imagen }}" alt="Imagen de {{ producto.nombre }}">
+            <div class="descripcion">
+                <h2>Modelo: {{ producto.modelo }}</h2>
+                <p>Descripción: {{ producto.especificaciones }}</p>
+                <p>Precio: ${{ producto.precio }}</p>
+                <p>Stock disponible: {{ producto.stock }}</p>
+                <label for="cantidad">Cantidad:</label>
+                <input type="number" id="cantidad" name="cantidad" min="1" max="{{ producto.stock }}" value="1">
+                <button type="button">
+                    <a href="{{ url_for('comprar', producto_id=producto.id, cantidad=1) }}">Comprar</a>
+                </button>
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>
