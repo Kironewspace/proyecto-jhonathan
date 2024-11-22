@@ -26,7 +26,7 @@ def mostrar_productos():
     return render_template('products.html')
 
 def agregar_producto(nombre, modelo, especificaciones, categoria, tipo_accesorio, stock, precio, imagen):
-    query = """INSERT INTO Productos 
+    query = """INSERT INTO Producto 
                (nombre, modelo, especificaciones, categoria, tipo_accesorio, stock, precio, imagen)
                VALUES (?, ?, ?, ?, ?, ?, ?, ?)"""
     try:
@@ -60,4 +60,4 @@ def producto_agregado():
     return "Producto agregado exitosamente."
 
 if __name__ == '__main__':
-    app.run(port=5002, debug=True)
+    app.run(port=5009, debug=True)

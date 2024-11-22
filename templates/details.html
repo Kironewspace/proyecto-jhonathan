@@ -106,20 +106,19 @@
 </head>
 <body>
     <div class="detalle-producto">
-        <h1>{{ producto.nombre }}</h1>
+        <h1>{{ producto_detalle.nombre }}</h1>
         <div class="producto-info">
-            <img src="data:image/jpeg;base64,{{ producto.imagen }}" alt="Imagen de {{ producto.nombre }}">
+            <img src="data:image/jpeg;base64,{{ producto_detalle.imagen }}" alt="Imagen de {{ producto_detalle.nombre }}">
             <div class="descripcion">
-                <h2>Modelo: {{ producto.modelo }}</h2>
-                <p>Descripción: {{ producto.especificaciones }}</p>
-                <p>Precio: ${{ producto.precio }}</p>
-                <p>Stock disponible: {{ producto.stock }}</p>
+                <h2>Modelo: {{ producto_detalle.modelo }}</h2>
+                <p>Descripción: {{ producto_detalle.especificaciones }}</p>
+                <p>Precio: ${{ producto_detalle.precio }}</p>
+                <p>Stock disponible: {{ producto_detalle.stock }}</p>
                 <label for="cantidad">Cantidad:</label>
-                <input type="number" id="cantidad" name="cantidad" min="1" max="{{ producto.stock }}" value="1">
+                <input type="number" id="cantidad" name="cantidad" min="1" max="{{ producto_detalle.stock }}" value="1">
                 <button type="button">
-                    <a href="{{ url_for('comprar', producto_id=producto.id, cantidad=1) }}">Comprar</a>
+                    <a href="{{ url_for('comprar', producto_id=producto_detalle.id, cantidad=1) }}">Comprar</a>
                 </button>
-                
             </div>
         </div>
     </div>

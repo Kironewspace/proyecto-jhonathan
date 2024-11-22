@@ -1,10 +1,10 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, abort, redirect
 import pyodbc
 import base64
 
 app = Flask(__name__)
 
-# Configuración de conexión
+# Configuración de conexión a la base de datos
 sql_config = {
     'driver': 'ODBC Driver 18 for SQL Server',
     'server': 'localhost',
@@ -21,59 +21,88 @@ conn_str = (
     "TrustServerCertificate=yes;"
 )
 
-def get_db_connection():
-    return pyodbc.connect(conn_str)
+# Función para obtener productos por categoría
+def obtener_productos(categoria=None):
+    productos = []
+    query = """
+        SELECT id, nombre, modelo, precio, imagen, categoria
+        FROM Productos
+    """
+    if categoria and categoria != "todos":
+        query += " WHERE categoria = ?"
+    try:
+        with pyodbc.connect(conn_str) as conn:
+            cursor = conn.cursor()
+            if categoria and categoria != "todos":
+                cursor.execute(query, categoria)
+            else:
+                cursor.execute(query)
+            rows = cursor.fetchall()
+            for row in rows:
+                productos.append({
+                    'id': row.id,
+                    'nombre': row.nombre,
+                    'modelo': row.modelo,
+                    'precio': row.precio,
+                    'categoria': row.categoria,
+                    'imagen': base64.b64encode(row.imagen).decode('utf-8') if row.imagen else None
+                })
+    except Exception as e:
+        print(f"Error al obtener productos: {e}")
+    return productos
 
-# Ruta principal: muestra los productos
+# Ruta para la página principal (muestra todos los productos)
 @app.route('/')
 def productos():
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute("SELECT id, nombre, modelo, precio, imagen FROM Productos")
-    productos = cursor.fetchall()
-    conn.close()
+    productos = obtener_productos()
+    return render_template('showproducts.html', productos=productos, categoria='todos')
 
-    productos_con_imagen = []
-    for prod in productos:
-        img_data = base64.b64encode(prod.imagen).decode('utf-8') if prod.imagen else None
-        productos_con_imagen.append({
-            'id': prod.id,
-            'nombre': prod.nombre,
-            'modelo': prod.modelo,
-            'precio': prod.precio,
-            'imagen': img_data,
-        })
+# Ruta dinámica para categorías (teléfonos, cargadores, accesorios)
+@app.route('/<string:categoria>')
+def mostrar_productos_por_categoria(categoria):
+    categorias_validas = ['telefono', 'cargador', 'accesorio']
+    if categoria not in categorias_validas:
+        return abort(404, description="Categoría no válida")
 
-    return render_template('showproducts.html', productos=productos_con_imagen)
+    productos = obtener_productos(categoria)
+    return render_template('showproducts.html', productos=productos, categoria=categoria)
 
-# Ruta para mostrar detalles del producto
-@app.route('/producto/<int:producto_id>', methods=['GET', 'POST'])
+# Ruta para detalles del producto
+@app.route('/producto/<int:producto_id>')
 def producto_detalle(producto_id):
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute("SELECT nombre, modelo, especificaciones, precio, stock, imagen FROM Productos WHERE id = ?", producto_id)
-    producto = cursor.fetchone()
-    conn.close()
-
+    query = """
+        SELECT id, nombre, modelo, especificaciones, precio, stock, imagen 
+        FROM Productos 
+        WHERE id = ?
+    """
+    producto = None
+    try:
+        with pyodbc.connect(conn_str) as conn:
+            cursor = conn.cursor()
+            cursor.execute(query, producto_id)
+            row = cursor.fetchone()
+            if row:
+                producto = {
+                    'id': row.id,
+                    'nombre': row.nombre,
+                    'modelo': row.modelo,
+                    'especificaciones': row.especificaciones,
+                    'precio': row.precio,
+                    'stock': row.stock,
+                    'imagen': base64.b64encode(row.imagen).decode('utf-8') if row.imagen else None
+                }
+    except Exception as e:
+        print(f"Error al obtener el producto: {e}")
     if producto:
-        img_data = base64.b64encode(producto.imagen).decode('utf-8') if producto.imagen else None
-        producto_info = {
-            'id': producto_id,
-            'nombre': producto.nombre,
-            'modelo': producto.modelo,
-            'especificaciones': producto.especificaciones,
-            'precio': producto.precio,
-            'stock': producto.stock,
-            'imagen': img_data,
-        }
-        return render_template('details.html', producto=producto_info)
+        return render_template('details.html', producto_detalle=producto)
     else:
-        return "Producto no encontrado", 404
+        return abort(404, description="Producto no encontrado")
 
 # Ruta para redirigir al formulario en la otra aplicación Flask
 @app.route('/comprar/<int:producto_id>/<int:cantidad>')
 def comprar(producto_id, cantidad):
     return redirect(f'http://127.0.0.1:5002/formulario/{producto_id}/{cantidad}')
 
+# Inicio del servidor
 if __name__ == '__main__':
-    app.run(port=5001, debug=True)
+    app.run(debug=True, port=5001)

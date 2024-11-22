@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Productos</title>
+    <title>Productos - {{ categoria|capitalize }}</title>
     <style>
         :root {
             --primary-color: #007bff;
@@ -13,7 +13,6 @@
             --border-radius: 10px;
             --transition-speed: 0.3s;
             --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.2);
-            --section-spacing: 80px;
         }
 
         * {
@@ -34,6 +33,27 @@
             font-size: 2.5rem;
             font-weight: 700;
             color: var(--primary-color);
+        }
+
+        .category-menu {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .category-menu a {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: bold;
+            margin: 0 15px;
+            padding: 10px 15px;
+            border: 2px solid var(--primary-color);
+            border-radius: var(--border-radius);
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+        }
+
+        .category-menu a:hover {
+            background-color: var(--primary-color);
+            color: var(--white);
         }
 
         .cards {
@@ -116,19 +136,23 @@
     </style>
 </head>
 <body>
-    <h2>Lista de Productos</h2>
-    <div class="cards">
-        {% for producto in productos %}
-        <div class="card">
-            <img src="data:image/jpeg;base64,{{ producto.imagen }}" alt="Imagen de {{ producto.nombre }}">
-            <div class="content">
-                <h3>{{ producto.nombre }}</h3>
-                <p>Modelo: {{ producto.modelo }}</p>
-                <p>Precio: ${{ producto.precio }}</p>
-                <a href="{{ url_for('producto_detalle', producto_id=producto.id) }}" class="button">Comprar</a>
-            </div>
+    
+    <!-- Menú de categorías -->
+    <h2>Productos de {{ categoria|capitalize }}</h2>
+
+<div class="cards">
+    {% for producto in productos %}
+    <div class="card">
+        <img src="data:image/jpeg;base64,{{ producto.imagen }}" alt="Imagen de {{ producto.nombre }}">
+        <div class="content">
+            <h3>{{ producto.nombre }}</h3>
+            <p>Modelo: {{ producto.modelo }}</p>
+            <p>Precio: ${{ producto.precio }}</p>
+            <a href="{{ url_for('producto_detalle', producto_id=producto.id) }}" class="button">Ver detalles</a>
         </div>
-        {% endfor %}
     </div>
+    {% endfor %}
+</div>
+
 </body>
 </html>
