@@ -1,5 +1,5 @@
+from flask import Flask, render_template, request, redirect
 import pyodbc
-from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
@@ -19,6 +19,14 @@ conn_str = (
     f"PWD={sql_config['password']};"
     "TrustServerCertificate=yes;"
 )
+
+# Diccionario para mapear los targets con URLs externas
+URL_MAP = {
+    "agregar-tareas": "http://127.0.0.1:5003",
+    "historial-tareas": "http://127.0.0.1:5003/history",
+    "pedidos": "http://127.0.0.1:5005/pedidos",
+    "facturas": "http://127.0.0.1:5006/facturas",
+}
 
 @app.route("/")
 def home():
@@ -44,7 +52,11 @@ def confirm():
                 user = cursor.fetchone()
 
                 if user:
-                    return redirect(url_for(target))
+                    # Redirigir al target si es válido
+                    if target in URL_MAP:
+                        return redirect(URL_MAP[target])
+                    else:
+                        return "Destino no válido", 400
                 else:
                     return render_template("confirm.html", error="Usuario o contraseña incorrectos", target=target)
         except pyodbc.Error as e:
@@ -53,22 +65,6 @@ def confirm():
     # Muestra la página de confirmación
     target = request.args.get("target", "/")
     return render_template("confirm.html", target=target)
-
-@app.route("/agregar-tareas")
-def agregar_tareas():
-    return "Página para agregar tareas"
-
-@app.route("/historial-tareas")
-def historial_tareas():
-    return "Página de historial de tareas"
-
-@app.route("/pedidos")
-def pedidos():
-    return "Página de pedidos"
-
-@app.route("/facturas")
-def facturas():
-    return "Página de facturas"
 
 if __name__ == "__main__":
     app.run(port=5006, debug=True)
