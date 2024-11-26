@@ -70,3 +70,6 @@ insert into db_admin (db_user, db_password) values ('Miguel', 'AdminDb54' )
 
 
 SELECT * FROM Productos
+
+select * FROM users
+

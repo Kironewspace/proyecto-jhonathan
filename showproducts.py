@@ -26,7 +26,7 @@ def obtener_productos(categoria=None):
     productos = []
     query = """
         SELECT id, nombre, modelo, precio, imagen, categoria
-        FROM Productos
+        FROM Producto
     """
     if categoria and categoria != "todos":
         query += " WHERE categoria = ?"
@@ -72,7 +72,7 @@ def mostrar_productos_por_categoria(categoria):
 def producto_detalle(producto_id):
     query = """
         SELECT id, nombre, modelo, especificaciones, precio, stock, imagen 
-        FROM Productos 
+        FROM Producto
         WHERE id = ?
     """
     producto = None

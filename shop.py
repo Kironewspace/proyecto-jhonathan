@@ -49,7 +49,7 @@ def formulario_cliente(producto_id, cantidad):
             id_cliente = cursor.execute("SELECT @@IDENTITY").fetchone()[0]
 
             # Obtener el nombre del producto para el pedido
-            cursor.execute("SELECT nombre FROM Productos WHERE id = ?", producto_id)
+            cursor.execute("SELECT nombre FROM Producto WHERE id = ?", producto_id)
             producto = cursor.fetchone()
             if not producto:
                 return "Producto no encontrado", 404
