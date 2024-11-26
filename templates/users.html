@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Usuario</title>
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #f0f0f0;
+            --text-color: #333;
+            --white: #fff;
+            --border-radius: 10px;
+            --transition-speed: 0.3s;
+            --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.2);
+            --section-spacing: 80px;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--secondary-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .form-container {
+            background-color: var(--white);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            width: 300px;
+            text-align: center;
+        }
+
+        .form-container h1 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            color: var(--text-color);
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--primary-color);
+            transition: border-color var(--transition-speed);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color var(--transition-speed);
+        }
+
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Formulario de Usuario</h1>
+        <form action="/users" method="post">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" name="username" id="userName" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Contraseña</label>
+                <input type="password" name="usr_password" id="password" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="privilegio">Privilegio</label>
+                <select name="privilegio" id="privilegio" required>
+                    <option value="admin">Admin</option>
+                    <option value="database_admin">Database Admin</option>
+                    <option value="empleado">Empleado</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="especialpassword">AdminDB Password</label>
+                <input type="password" name="especialpassword" id="especialpassword">
+            </div>
+
+            <div class="form-group">
+                <button type="submit">Enviar a la base de datos</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre Nosotros</title>
+    <style>
+        /* Estilos generales */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: #000;
+            background: url('./images/sobrenosotros.png') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        h1 {
+            text-align: center;
+            color: #FF0000;
+            margin-top: 20px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            padding: 50px 20px;
+            height: calc(100vh - 100px);
+            opacity: 0;
+            transform: translateY(100px);
+            animation: fadeInUp 2s forwards;
+        }
+
+        .column {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 30%;
+            text-align: justify;
+        }
+
+        .column h2 {
+            color: #FF0000;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsividad */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+
+            .column {
+                max-width: 80%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Sobre Nosotros</h1>
+    <div class="container">
+        <div class="column">
+            <h2>Misión</h2>
+            <p>
+                Nuestra misión es brindar productos de alta calidad que mejoren la vida de nuestros clientes,
+                garantizando la satisfacción y el compromiso con el mismo.
+            </p>
+        </div>
+        <div class="column">
+            <h2>Visión</h2>
+            <p>
+                Ser líderes en el mercado local, reconocidos por nuestra innovación, integridad y 
+                responsabilidad social, alcanzando nuevos horizontes de excelencia.
+            </p>
+        </div>
+        <div class="column">
+            <h2>Historia</h2>
+            <p>
+                Desde nuestros inicios en 2017, hemos trabajado incansablemente para convertirnos en una 
+                empresa confiable. 
+            </p>
+        </div>
+    </div>
+</body>
+</html>
