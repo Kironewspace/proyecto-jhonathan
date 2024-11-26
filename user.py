@@ -4,7 +4,7 @@ from flask import Flask, render_template, request
 sql_config = {
     'driver': 'ODBC Driver 18 for SQL Server',
     'server': 'localhost',
-    'database': 'DarwinCell',
+    'database': 'Darwin',
     'user': 'SA',
     'password': 'MTp070213.'
 }
@@ -47,4 +47,4 @@ def submit():
 
 
 if __name__ == '__main__':
-    app.run(port=5001, debug=True)
+    app.run(port=50010, debug=True)

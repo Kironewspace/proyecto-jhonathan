@@ -28,10 +28,10 @@ def listar_pedidos():
     cursor = conn.cursor()
     query = """
         SELECT p.codigo_pedido, c.nombre, c.telefono, pr.nombre AS producto_nombre, 
-               pr.modelo, p.cantidad, (pr.precio * p.cantidad) AS total
+               pr.modelo, p.cantidad, (pr.precio * p.cantidda) AS total
         FROM Pedido p
         JOIN Clientes c ON p.id_cliente = c.id_cliente
-        JOIN Productos pr ON p.id_producto = pr.id
+        JOIN Producto pr ON p.id_producto = pr.id
         WHERE p.estado = 'Pendiente';
     """
     cursor.execute(query)
@@ -50,11 +50,12 @@ def confirmar_pedido(codigo_pedido):
                (pr.precio * p.cantidad), GETDATE(), p.fecha_pedido, 'Completado'
         FROM Pedido p
         JOIN Clientes c ON p.id_cliente = c.id_cliente
-        JOIN Productos pr ON p.id_producto = pr.id
+        JOIN Producto pr ON p.id_producto = pr.id
         WHERE p.codigo_pedido = ?
     """, (codigo_pedido,))
 
     cursor.execute("DELETE FROM Pedido WHERE codigo_pedido = ?", (codigo_pedido,))
+
     conn.commit()
     conn.close()
 

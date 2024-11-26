@@ -96,4 +96,4 @@ def update_status_route(todo_id, status):
     return redirect(url_for('history'))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(port=5011,debug=True)

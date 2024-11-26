@@ -43,7 +43,7 @@ def listar_facturas():
                f.fecha_factura, f.fecha_pedido, f.estado
         FROM Factura f
         JOIN Clientes c ON f.id_cliente = c.id_cliente
-        JOIN Productos pr ON f.id_producto = pr.id;
+        JOIN Producto pr ON f.id_producto = pr.id;
     """
     try:
         cursor.execute(query)
@@ -74,7 +74,7 @@ def eliminar_factura(codigo_pedido):
 
         if factura:
             id_producto, cantidad = factura
-            cursor.execute("UPDATE Productos SET stock = stock + ? WHERE id = ?", (cantidad, id_producto))
+            cursor.execute("UPDATE Producto SET stock = stock + ? WHERE id = ?", (cantidad, id_producto))
 
         # Eliminar factura
         cursor.execute("DELETE FROM Factura WHERE codigo_pedido = ?", (codigo_pedido,))
@@ -134,7 +134,7 @@ def listar_facturas():
                f.fecha_factura, f.fecha_pedido, f.estado
         FROM Factura f
         JOIN Clientes c ON f.id_cliente = c.id_cliente
-        JOIN Productos pr ON f.id_producto = pr.id;
+        JOIN Producto pr ON f.id_producto = pr.id;
     """
     try:
         cursor.execute(query)
@@ -165,7 +165,7 @@ def eliminar_factura(codigo_pedido):
 
         if factura:
             id_producto, cantidad = factura
-            cursor.execute("UPDATE Productos SET stock = stock + ? WHERE id = ?", (cantidad, id_producto))
+            cursor.execute("UPDATE Producto SET stock = stock + ? WHERE id = ?", (cantidad, id_producto))
 
         # Eliminar factura
         cursor.execute("DELETE FROM Factura WHERE codigo_pedido = ?", (codigo_pedido,))
