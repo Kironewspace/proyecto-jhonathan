@@ -1,3 +1,5 @@
+create database Darwin
+
 use Darwin
 
 CREATE TABLE Producto (
@@ -31,7 +33,7 @@ CREATE TABLE Pedido (
     fecha_pedido DATETIME DEFAULT GETDATE(),  
     estado NVARCHAR(20) DEFAULT 'Pendiente',  
     FOREIGN KEY (id_cliente) REFERENCES Clientes(id_cliente),  
-    FOREIGN KEY (id_producto) REFERENCES Productos(id)        
+    FOREIGN KEY (id_producto) REFERENCES Producto(id)        
 );
 
 CREATE TABLE Factura (
@@ -47,7 +49,7 @@ CREATE TABLE Factura (
     fecha_pedido DATETIME NOT NULL,  -- Añadido campo para la fecha del pedido
     estado NVARCHAR(20) DEFAULT 'Completado',
     FOREIGN KEY (id_cliente) REFERENCES Clientes(id_cliente),
-    FOREIGN KEY (id_producto) REFERENCES Productos(id)
+    FOREIGN KEY (id_producto) REFERENCES Producto(id)
 );
 
 

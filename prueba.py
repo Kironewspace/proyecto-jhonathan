@@ -3,7 +3,7 @@ import pyodbc
 sql_config = {
     'driver': 'ODBC Driver 18 for SQL Server',
     'server': 'localhost',
-    'database': 'DarwinCell',
+    'database': 'Darwin',
     'user': 'SA',
     'password': 'MTp070213.'
 }

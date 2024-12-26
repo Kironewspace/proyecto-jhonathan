@@ -3,7 +3,7 @@ from flask import Flask, render_template, request
 
 sql_config = {
     'driver': 'ODBC Driver 18 for SQL Server',
-    'server': 'localhost',
+    'server': 'Miguel-PC',
     'database': 'DarwinCell',
     'user': 'SA',
     'password': 'MTp070213.'

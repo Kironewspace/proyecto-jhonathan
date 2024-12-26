@@ -6,7 +6,7 @@ app = Flask(__name__)
 # Configuración de conexión a la base de datos
 sql_config = {
     'driver': 'ODBC Driver 18 for SQL Server',
-    'server': 'localhost',
+    'server': 'Miguel-PC',
     'database': 'Darwin',
     'user': 'SA',
     'password': 'MTp070213.'

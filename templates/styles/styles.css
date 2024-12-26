@@ -77,7 +77,9 @@ nav {
   transform: translateY(-10px);
   transition: opacity 0.4s, transform 0.4s;
 }
-
+.menu a{
+  text-decoration: none;
+}
 .menu.active {
   display: flex;
   opacity: 1;

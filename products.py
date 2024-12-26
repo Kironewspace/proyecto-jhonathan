@@ -5,9 +5,9 @@ app = Flask(__name__)
 
 
 sql_config = {
-    'driver': 'ODBC Driver 17 for SQL Server',
+    'driver': 'ODBC Driver 18 for SQL Server',
     'server': 'localhost',
-    'database': 'Darwin',
+    'database': 'DarwinCell',
     'user': 'SA',
     'password': 'MTp070213.'
 }
@@ -18,6 +18,7 @@ conn_str = (
     f"UID={sql_config['user']};"
     f"PWD={sql_config['password']};"
     "TrustServerCertificate=yes;"
+    "Encrypt=no;"
 )
 
 
@@ -26,7 +27,7 @@ def mostrar_productos():
     return render_template('products.html')
 
 def agregar_producto(nombre, modelo, especificaciones, categoria, tipo_accesorio, stock, precio, imagen):
-    query = """INSERT INTO Producto 
+    query = """INSERT INTO Productos 
                (nombre, modelo, especificaciones, categoria, tipo_accesorio, stock, precio, imagen)
                VALUES (?, ?, ?, ?, ?, ?, ?, ?)"""
     try:

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, abort, redirect
+from flask import Flask, render_template, abort, redirect, request
 import pyodbc
 import base64
 
@@ -7,8 +7,8 @@ app = Flask(__name__)
 # Configuración de conexión a la base de datos
 sql_config = {
     'driver': 'ODBC Driver 18 for SQL Server',
-    'server': 'localhost',
-    'database': 'Darwin',
+    'server': 'Miguel-PC',
+    'database': 'DarwinCell',
     'user': 'SA',
     'password': 'MTp070213.'
 }
@@ -99,9 +99,13 @@ def producto_detalle(producto_id):
         return abort(404, description="Producto no encontrado")
 
 # Ruta para redirigir al formulario en la otra aplicación Flask
-@app.route('/comprar/<int:producto_id>/<int:cantidad>')
-def comprar(producto_id, cantidad):
+@app.route('/comprar/<int:producto_id>', methods=['POST'])
+def comprar(producto_id):
+    cantidad = request.form.get('cantidad')
+    if not cantidad:
+        return "Cantidad no especificada", 400
     return redirect(f'http://127.0.0.1:5002/formulario/{producto_id}/{cantidad}')
+
 
 # Inicio del servidor
 if __name__ == '__main__':
